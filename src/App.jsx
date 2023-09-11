@@ -8,11 +8,10 @@ function App() {
       <div className='container my-4'>
         <div className="row">
           <div className="col-6 offset-3">
-            <h1 className='text-center text-primary fw-semibold'>Get Countries</h1>
+            <h1 className='text-center text-primary fw-semibold'>Filtered Countries</h1>
           </div>
         </div>
         <Search/>
-        <GetCountries />
       </div>
     </>
   )

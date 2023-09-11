@@ -29,7 +29,7 @@ client
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <ApolloProvider client={client}>
-      <App />
+        <App />
     </ApolloProvider>
   </React.StrictMode>,
 )

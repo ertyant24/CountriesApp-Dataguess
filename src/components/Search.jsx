@@ -10,6 +10,9 @@ function Search() {
     // STATES
     const [searchText, setSearchText] = useState("");
     const [filterData, setFilterData] = useState([]);
+    const [selectedDiv, setSelectedDiv] = useState(null);
+
+    const colors = ["red", "yellow", "pink", "purple", "grey", "orange", "brown", "gold", "green"];
 
     const { loading, error, data } = useQuery(GET_COUNTRIES);
 
@@ -17,6 +20,11 @@ function Search() {
         <span className="visually-hidden mt-2">Loading...</span>
     </div>
     if (error) return <p>Error Message: {error.message}</p>
+
+    const changeBackgroundColor = (index) => {
+        const randomColor = colors[Math.floor(Math.random() * colors.length)]
+        setSelectedDiv({index, color: randomColor})
+    }
 
     const searchChange = (event) => {
         setSearchText(event.target.value);
@@ -34,9 +42,9 @@ function Search() {
             <div className="container mt-5 pe-5">
                 <div className="row">
                     <div className="col-6 offset-3">
-                        <div className="mb-3 ps-4">
+                        <div className="mb-3 ps-5">
                             <label htmlFor="search" className='form-label fw-semibold'>Country Name</label>
-                            <div className='d-flex text-center'>
+                            <div className='d-flex'>
                                 <input
                                     type="text"
                                     placeholder="Ara..."
@@ -50,9 +58,9 @@ function Search() {
                             </div>
 
                             <div className="mt-5 d-flex flex-wrap justify-content-center">
-                                {filterData.map((country) => (
-                                    <div key={country.code}>
-                                        <div className='country mt-4'>
+                                {filterData.map((country, index) => (
+                                    <div key={country.code} >
+                                        <div className='country mt-4' style={{backgroundColor: selectedDiv?.index === index ? selectedDiv.color: "white" , cursor: "pointer"}} onClick={() => changeBackgroundColor(index)}>
                                             <h2 className='mb-3 text-center'>{country.code}
                                            </h2><hr />
                                             <p><span className='fw-semibold'>Name:</span> {country.name} - <span>{country.emoji}</span></p>
