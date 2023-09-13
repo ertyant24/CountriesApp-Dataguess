@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useQuery } from '@apollo/client';
 import QueryCountries from '../schemas/Countries';
 import '../App.css'
@@ -14,6 +14,24 @@ function Search() {
     const [filterData, setFilterData] = useState([]);
     const [selectedDiv, setSelectedDiv] = useState(null);
     const [previousColor, setPreviousColor] = useState(null); // Bir öğe seçildiğinde rengin seçilen önceki öğeden farklı olduğundan emin olun
+
+    // Öğeler yüklendikten ve filtrelendikten sonra otomatik olarak 10'uncu öğeyi veya öğe miktarı 10'dan küçükse son öğeyi seçin. Uygulama, listenin çok uzayabileceği dikkate alınmalıdır.
+    useEffect(() => {
+        if (filterData) {
+            let selectedIndex;
+      
+            if (filterData.length <= 10) {
+              selectedIndex = filterData.length - 1;
+            } else {
+              selectedIndex = 9;
+            }
+      
+            const selectedColor = colors[Math.floor(Math.random() * colors.length)];
+      
+            setSelectedDiv({ index: selectedIndex, color: selectedColor });
+          }
+    },[filterData])
+
 
     const colors = ["red", "yellow", "pink", "purple", "grey", "orange", "brown", "gold", "green"];
 
@@ -52,6 +70,7 @@ function Search() {
         setFilterData(filteredCountries);
     }
 
+   
     return (
         <>
             <div className="container mt-5">
