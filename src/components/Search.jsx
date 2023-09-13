@@ -13,6 +13,7 @@ function Search() {
     const [searchText, setSearchText] = useState("");
     const [filterData, setFilterData] = useState([]);
     const [selectedDiv, setSelectedDiv] = useState(null);
+    const [previousColor, setPreviousColor] = useState(null); // Bir öğe seçildiğinde rengin seçilen önceki öğeden farklı olduğundan emin olun
 
     const colors = ["red", "yellow", "pink", "purple", "grey", "orange", "brown", "gold", "green"];
 
@@ -24,14 +25,20 @@ function Search() {
     if (error) return <p>Error Message: {error.message}</p>
 
     const changeBackgroundColor = (index) => {
-        const randomColor = colors[Math.floor(Math.random() * colors.length)]
-        setSelectedDiv({ index, color: randomColor})
+        let randomColor;
+
+        do{
+            randomColor = colors[Math.floor(Math.random() * colors.length)]
+        } while(randomColor === previousColor)
+
+        setPreviousColor(randomColor);
+       
+        setSelectedDiv({ index, color: randomColor});
     }
 
     const deleteDiv = (code) => {
         window.confirm(`Are you sure deleted this country - ${code}`)
         setFilterData(() => filterData.filter((country) => country.code !== code));
-        // console.log(prevData);
     }
 
     const searchChange = (event) => {
@@ -66,7 +73,7 @@ function Search() {
                             </div>
 
                             <div className="mt-5 d-flex flex-wrap justify-content-center">
-                                {filterData.map((country, index, x) => (
+                                {filterData.map((country, index) => (
                                     <div key={country.code} >
                                         <div className='country mt-4' style={{ backgroundColor: selectedDiv?.index === index ? selectedDiv.color : "white", cursor: "pointer"}} onClick={() => changeBackgroundColor(index)}>
                                             <div className='d-flex justify-content-between mb-4'>
