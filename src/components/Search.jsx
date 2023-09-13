@@ -17,8 +17,8 @@ function Search() {
 
     // Öğeler yüklendikten ve filtrelendikten sonra otomatik olarak 10'uncu öğeyi veya öğe miktarı 10'dan küçükse son öğeyi seçin. Uygulama, listenin çok uzayabileceği dikkate alınmalıdır.
     useEffect(() => {
+        let selectedIndex;
         if (filterData) {
-            let selectedIndex;
 
             if (filterData.length <= 10) {
                 selectedIndex = filterData.length - 1;
@@ -30,6 +30,7 @@ function Search() {
 
             setSelectedDiv({ index: selectedIndex, color: selectedColor });
         }
+        console.log(`Datalar yüklendiğinde seçilen div: ${selectedIndex + 1}`);
     }, [filterData])
 
 
@@ -78,7 +79,6 @@ const search = () => {
     console.log(filteredCountries);
     setFilterData(filteredCountries);
 }
-
 
 return (
     <>
