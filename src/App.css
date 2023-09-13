@@ -47,3 +47,7 @@
   padding: 2rem;
   width: 26rem;
 }
+
+.active{
+  display: none;
+}
