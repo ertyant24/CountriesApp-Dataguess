@@ -65,15 +65,11 @@ function Search() {
     }
 
     const deleteDiv = (code) => {
-        let result = window.confirm(`Are you sure deleted this country - ${code}`);
-        if (result == true) {
+        // let result = window.confirm(`Are you sure deleted this country - ${code}`);
+        
             setFilterData(() => filterData.filter((country) => country.code !== code));
             toastr.error('Deleted this data.', `${code}`, { timeOut: 3000 })
-        }
-        else {
-            alert(`Not deleted this data - ${code}`);
-        }
-
+        
     }
 
     const searchChange = (event) => {
